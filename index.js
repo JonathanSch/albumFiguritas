@@ -9,5 +9,9 @@ app.use(require('cors')());
 const router = require('./routes')
 app.use('/api',router)
 
+app.get('/',(req,res)=>{
+    res.send({message:'Todo correcto'})
+})
+
 
 app.listen(PORT,(err)=>err?console.log(err):console.log(`Corriendo en el puerto ${PORT}`))
