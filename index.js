@@ -1,11 +1,13 @@
 const express = require('express')
 const app = express()
 const PORT = process.env.PORT || 3000;
+const cors = require('cors');
 
 require('./database').connectDatabase()
 
 app.use(express.json());
-app.use(require('cors')());
+app.use(cors());
+
 const router = require('./routes')
 app.use('/api',router)
 
