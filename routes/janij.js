@@ -53,4 +53,9 @@ router.get('/getMadrijim/:token/:name',verifyToken,async(req,res)=>{
     
 })
 
+router.patch('/conseguir',verifyToken,(req,res)=>{
+    Janij.updateOne({name:req.body.name,"madrijim.name":req.body.madrij},
+    {$set:{"madrijim.$.conseguido" : true}})
+})
+
 module.exports = router;
