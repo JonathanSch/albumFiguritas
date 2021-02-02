@@ -40,6 +40,9 @@ router.post('/login',async(req,res)=>{
 
 router.get('/getMadrijim',verifyToken,async(req,res)=>{
     try{
+        if(!req.body.name){
+            res.send({message:"No name on request"}).status(400);
+        }
         const janij = await Janij.findOne({name:req.body.name});
         res.send(janij.madrijim).status(200);
     }
