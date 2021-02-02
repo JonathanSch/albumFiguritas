@@ -3,10 +3,14 @@ const jwt = require('jsonwebtoken');
 const verifyToken = (req,res,next) =>{
     const verificar = jwt.verify(req.body.token, process.env.JWT_SECRET); 
     console.log(verificar)
-    if(!verificar) res.send({message:"Invalid token"}).status(400);
+    if(!verificar) {
+        res.send({message:"Invalid token"}).status(400);
+    }
+    else{
+        req.token = verificar;
 
     next();
-
+    }
 }
 
 module.exports = verifyToken;
