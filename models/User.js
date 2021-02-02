@@ -16,6 +16,20 @@ const UserSchema = new mongoose.Schema({
     },
     foto:{
         type:String,
+    },
+    datoCurioso:{
+        type: String,
+        required:true
+    },
+    conseguido:{
+        type:Boolean,
+        default : false,
+        required: true,
+    },
+    tiempo:{
+        type:Number,
+        default : 0,
+        required: true,
     }
 })
 

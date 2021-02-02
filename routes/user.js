@@ -24,7 +24,8 @@ router.post('/create',async(req,res)=>{
         const newUser = new User({
             name:req.body.name,
             puesto:req.body.puesto,
-            edad:req.body.edad
+            edad:req.body.edad,
+            datoCurioso: req.body.datoCurioso,
         })
         const guardado = await newUser.save()
         res.send(guardado).status(201)

@@ -8,8 +8,10 @@ require('./database').connectDatabase()
 app.use(express.json());
 app.use(cors());
 
-const router = require('./routes')
-app.use('/api',router)
+const userRoutes = require('./routes/user')
+const janijRoutes = require('./routes/janij')
+app.use('/api',userRoutes)
+app.use('/janij', janijRoutes)
 
 app.get('/',(req,res)=>{
     res.send({message:'Todo correcto'})
