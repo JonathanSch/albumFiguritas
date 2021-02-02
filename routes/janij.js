@@ -50,10 +50,9 @@ router.get('/getMadrijim/:token/:name',verifyToken,async(req,res)=>{
         res.send(error).status(400);
     }
 
-    
 })
 
-router.patch('/conseguir',verifyToken,async(req,res)=>{
+router.patch('/conseguir/:token',verifyToken,async(req,res)=>{
     try {
         const updatedUser = await Janij.updateOne({name:req.body.name,"madrijim.name":req.body.madrij},
     {$set:{"madrijim.$.conseguido" : true}})
