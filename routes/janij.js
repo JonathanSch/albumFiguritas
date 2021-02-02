@@ -38,7 +38,7 @@ router.post('/login',async(req,res)=>{
     
 })
 
-router.get('/getMadrijim',verifyToken,async(req,res)=>{
+router.get('/getMadrijim/:token',verifyToken,async(req,res)=>{
     try{
         if(!req.body.name){
             res.send({message:"No name on request"}).status(400);
