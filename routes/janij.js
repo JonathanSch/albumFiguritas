@@ -22,13 +22,18 @@ router.post('/createJanij',async(req,res)=>{
 })
 
 router.post('/login',async(req,res)=>{
-    const findUser = await Janij.findOne({name:req.body.name});
+    try {
+        const findUser = await Janij.findOne({name:req.body.name});
     const comparePasswords = await bcrypt.compare(req.body.password,findUser.password);
     if(!comparePasswords) res.send({message:'Wrong password'})
 
     const token = jwt.sign({findUser},process.env.JWT_SECRET);
 
     res.send({token}).status(200);
+    } catch (error) {
+        res.send(error).status(400);
+    }
+    
 })
 
 module.exports = router;
