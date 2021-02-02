@@ -24,6 +24,7 @@ router.post('/createJanij',async(req,res)=>{
 router.post('/login',async(req,res)=>{
     try {
         const findUser = await Janij.findOne({name:req.body.name});
+        if(!findUser) res.send({message:'User not found'});
     const comparePasswords = await bcrypt.compare(req.body.password,findUser.password);
     if(!comparePasswords) res.send({message:'Wrong password'})
 
