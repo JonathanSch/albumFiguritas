@@ -38,12 +38,12 @@ router.post('/login',async(req,res)=>{
     
 })
 
-router.get('/getMadrijim/:token',verifyToken,async(req,res)=>{
+router.get('/getMadrijim/:token/:name',verifyToken,async(req,res)=>{
     try{
-        if(!req.body.name){
+        if(!req.params.name){
             res.send({message:"No name on request"}).status(400);
         }
-        const janij = await Janij.findOne({name:req.body.name});
+        const janij = await Janij.findOne({name:req.params.name});
         res.send(janij.madrijim).status(200);
     }
     catch(error){

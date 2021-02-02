@@ -4,7 +4,7 @@ const verifyToken = (req,res,next) =>{
     try {
         console.log(req.params.token)
         const verificar = jwt.verify(req.params.token, process.env.JWT_SECRET); 
-        req.token = verificar;
+        req.body.token = verificar;
 
         next();
     } catch (error) {
