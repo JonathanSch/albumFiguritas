@@ -3,6 +3,7 @@ const router = express.Router();
 const Janij = require('../models/Janij');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken')
+const verifyToken = require('../middleware/verifyToken')
 
 router.post('/createJanij',async(req,res)=>{
     try {
@@ -34,6 +35,18 @@ router.post('/login',async(req,res)=>{
     } catch (error) {
         res.send(error).status(400);
     }
+    
+})
+
+router.get('/getMadrijim',verifyToken,async(req,res)=>{
+    try{
+        const janij = await Janij.findOne({name:req.body.name});
+        res.send(janij.madrijim).status(200);
+    }
+    catch(error){
+        res.send(error).status(400);
+    }
+
     
 })
 
