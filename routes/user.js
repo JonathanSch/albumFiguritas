@@ -20,6 +20,7 @@ cloudinary.config({
 })
 
 router.post('/create',async(req,res)=>{
+    console.log(req.body.datoCurioso)
     try {
         const newUser = new User({
             name:req.body.name,
@@ -48,6 +49,18 @@ router.post('/subirFoto/:name', (req,res)=>{
         res.send(updatedUser)
     })
 })
+})
+
+router.patch('/random/:name',async(req,res)=>{
+    try {
+        const actualUser = await User.findOne({name:req.params.name})
+    const guardar = await actualUser.save();
+    res.send(guardar).status(200)
+    } catch (error) {
+       res.send(error).status(400) 
+    }
+    
+
 })
 
 module.exports = router;

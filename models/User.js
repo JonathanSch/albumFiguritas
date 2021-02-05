@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const Janij = require('./Janij');
 
 const UserSchema = new mongoose.Schema({
     name:{
@@ -30,7 +31,28 @@ const UserSchema = new mongoose.Schema({
         type:Number,
         default : 0,
         required: true,
+    },
+    opcionesRandom :{
+        type:Array,
     }
+})
+UserSchema.pre('save',async function(next){
+    try {
+        const actualUser = this;
+    const madrijim = await User.find();
+    let random = [];
+    for(let i = 0;i<3;i++){
+        let numeroRandom = Math.floor(Math.random() * (madrijim.length))
+        console.log(numeroRandom)
+        random.push(madrijim[numeroRandom].name)
+    }
+    actualUser.opcionesRandom = random;
+    } catch (error) {
+        console.log(error)
+    }
+
+    
+    next();
 })
 
 const User = mongoose.model('User', UserSchema);
