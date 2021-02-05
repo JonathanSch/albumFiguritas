@@ -16,11 +16,11 @@ const JanijSchema = new mongoose.Schema({
     }
 },
 )
-JanijSchema.pre("save",async function(){
+JanijSchema.pre("save",async function(next){
     const janij = this;
     const madrijim = await User.find()
     janij.madrijim = madrijim
-
+    next();
 })
 
 const Janij = mongoose.model('Janij', JanijSchema)
