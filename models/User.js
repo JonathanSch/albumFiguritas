@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const Janij = require('./Janij');
 
 const UserSchema = new mongoose.Schema({
     name:{
@@ -55,6 +54,4 @@ UserSchema.pre('save',async function(next){
     next();
 })
 
-const User = mongoose.model('User', UserSchema);
-
-module.exports = User;
+module.exports = mongoose.model('User',UserSchema)

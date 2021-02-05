@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const User = require('./User')
+const User = require('./User');
 
 const JanijSchema = new mongoose.Schema({
     name:{
@@ -16,13 +16,11 @@ const JanijSchema = new mongoose.Schema({
     }
 },
 )
-JanijSchema.pre('save',async function(next){
+JanijSchema.pre("save",async function(){
     const janij = this;
     const madrijim = await User.find()
+    janij.madrijim = madrijim
 
-    janij.madrijim = madrijim;
-
-    next()
 })
 
 const Janij = mongoose.model('Janij', JanijSchema)
