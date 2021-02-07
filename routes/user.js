@@ -20,13 +20,20 @@ cloudinary.config({
 })
 
 router.post('/create',async(req,res)=>{
-    console.log(req.body.datoCurioso)
+    const madrijim = await User.find();
+    let random = [];
+    for(let i = 0;i<3;i++){
+        let numeroRandom = Math.floor(Math.random() * (madrijim.length))
+        console.log(numeroRandom)
+        random.push(madrijim[numeroRandom].name)
+    }
     try {
         const newUser = new User({
             name:req.body.name,
             puesto:req.body.puesto,
             edad:req.body.edad,
             datoCurioso: req.body.datoCurioso,
+            opcionesRandom:random,
         })
         const guardado = await newUser.save()
         res.send(guardado).status(201)
