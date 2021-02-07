@@ -6,18 +6,20 @@ const jwt = require('jsonwebtoken')
 const verifyToken = require('../middleware/verifyToken')
 
 router.post('/createJanij',async(req,res)=>{
-    try {
+    try {   
+        
     const salt = bcrypt.genSaltSync(10);
-    const hashPassword = await bcrypt.hashSync(req.body.password,salt);
+    const hashPassword =  bcrypt.hashSync(req.body.password,salt);
     const newJanij = new Janij({
        name: req.body.name,
        password : hashPassword
    })
-    
-    await newJanij.save();
-    res.send(newJanij).status(201);
+   
+    const createUser = await newJanij.save();
+    res.send(createUser).status(201);
 
     } catch (error) {
+        console.log(error)
         res.send(error).status(400);
     }
 })
@@ -28,6 +30,7 @@ router.post('/login',async(req,res)=>{
         if(!findUser) res.send({message:'User not found'});
     const comparePasswords = await bcrypt.compare(req.body.password,findUser.password);
     if(!comparePasswords) res.send({message:'Wrong password'})
+    
 
     const token = jwt.sign({findUser},process.env.JWT_SECRET);
 
@@ -61,6 +64,17 @@ router.patch('/conseguir',verifyToken,async(req,res)=>{
         res.send(error).status(400)
     }
     
+})
+
+router.patch('/updateTime',verifyToken,async(req,res)=>{
+    try {
+        const updatedUser = await Janij.updateOne({name:req.body.name,"madrijim.name":req.body.madrij},
+        {$set:{"madrijim.$.tiempo": Date.now()+ 900000}})
+        res.send(updatedUser).status(200)
+    } catch (error) {
+        console.log(error)
+        res.send(error).status(400);
+    }
 })
 
 module.exports = router;
