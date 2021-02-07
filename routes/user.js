@@ -59,8 +59,15 @@ router.post('/subirFoto/:name', (req,res)=>{
 })
 
 router.patch('/random/:name',async(req,res)=>{
+    const madrijim = await User.find();
+    let random = [];
+    for(let i = 0;i<3;i++){
+        let numeroRandom = Math.floor(Math.random() * (madrijim.length))
+        console.log(numeroRandom)
+        random.push(madrijim[numeroRandom].name)
+    }
     try {
-        const actualUser = await User.findOne({name:req.params.name})
+        const actualUser = await User.updateOne({name:req.params.name},{$push:{opcionesRandom:random}})
     const guardar = await actualUser.save();
     res.send(guardar).status(200)
     } catch (error) {
