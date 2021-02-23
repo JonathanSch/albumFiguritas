@@ -7,8 +7,9 @@ const verifyToken = require('../middleware/verifyToken')
 
 router.post('/createJanij',async(req,res)=>{
     try {   
-    const isJanijCreatedAlready = Janij.findOne({name:req.body.name});
+    const isJanijCreatedAlready = await Janij.findOne({name:req.body.name});
     if(isJanijCreatedAlready) res.send({message:"Ese nombre de usuario está en uso"}).status(400);
+
     const salt = bcrypt.genSaltSync(10);
     const hashPassword =  bcrypt.hashSync(req.body.password,salt);
     const newJanij = new Janij({
